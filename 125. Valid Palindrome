@@ -1,0 +1,20 @@
+Runtime: 8 ms, faster than 83.67% of C++ online submissions for Valid Palindrome.
+Memory Usage: 9.4 MB, less than 59.18% of C++ online submissions for Valid Palindrome.
+class Solution {
+public:
+    bool isPalindrome(string s) {
+        int l = 0, r = s.size() - 1;
+        while (l < r) {
+            while (l < r && !isalnum(s[l]))
+                l++;
+            while (l < r && !isalnum(s[r]))
+                r--;
+            //cout<<l<<" "<<r<<endl;
+            if (l < r && (s[l] + 32 - 'a') % 32 != (s[r] + 32 - 'a') % 32)
+                return false;
+            l++;
+            r--;
+        }
+        return true;
+    }
+};
