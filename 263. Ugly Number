@@ -1,0 +1,33 @@
+Runtime: 4 ms, faster than 59.14% of C++ online submissions for Ugly Number.
+Memory Usage: 8.1 MB, less than 93.33% of C++ online submissions for Ugly Number.
+class Solution {
+public:
+    bool isUgly(int num) {
+        while (num / 2 && num % 2 == 0) {
+            num /= 2;
+        }
+        while (num / 3 && num % 3 == 0) {
+            num /= 3;
+        }
+        while (num / 5 && num % 5 == 0) {
+            num /= 5;
+        }
+        return num == 1;
+    }
+};
+
+Runtime: 4 ms, faster than 59.14% of C++ online submissions for Ugly Number.
+Memory Usage: 8.1 MB, less than 60.00% of C++ online submissions for Ugly Number.
+class Solution {
+public:
+    bool isUgly(int num) {
+        if (num == 0)
+            return false;
+        vector<int> f{2, 3, 5};
+        for (auto i : f) {
+            while (num % i == 0)
+                num /= i;
+        }
+        return num == 1;
+    }
+};
