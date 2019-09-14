@@ -1,0 +1,35 @@
+Runtime: 16 ms, faster than 67.37% of C++ online submissions for Minimum Window Substring.
+Memory Usage: 18.7 MB, less than 30.00% of C++ online submissions for Minimum Window Substring.
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        string res = "";
+        if (s.empty() || t.empty() || s.size() < t.size())
+            return res;
+        
+        int left = 0, right = 0, minLen = INT_MAX, cnt = 0;
+        //vector<int> vs(128, 0);
+        vector<int> vt(128, 0);
+        
+        for (auto c : t)
+            vt[c]++;
+        
+        for (int i = 0 ; i < s.size(); i++) {
+            if (--vt[s[i]] >= 0) {
+                cnt++;            
+            }
+            while (cnt == t.size()) {
+                //cout<<minLen<<endl;
+                    if (minLen > i - left + 1) {
+                        minLen = i - left + 1;
+                        res = s.substr(left, minLen);
+                    }
+                    if (++vt[s[left]] > 0) {
+                        cnt--;
+                    }
+                    left++;
+                }
+        }
+        return res;
+    }
+};
