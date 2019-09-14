@@ -1,0 +1,24 @@
+Runtime: 8 ms, faster than 78.83% of C++ online submissions for 3Sum Smaller.
+Memory Usage: 8.5 MB, less than 100.00% of C++ online submissions for 3Sum Smaller.
+class Solution {
+public:
+    int threeSumSmaller(vector<int>& nums, int target) {
+        int res = 0, n = nums.size();
+        sort(nums.begin(), nums.end());
+        for (int i = 0; i < n - 2; i++) {
+            int l = i + 1, r = n - 1;
+            while (l < r) {
+                int sum = nums[i] + nums[l] + nums[r];
+                //cout<<i<<" "<<sum<<endl;
+                if (sum < target) {
+                    //cout<<res<<" "<<r<<" "<<l<<endl;
+                    res += r - l;
+                    
+                    l++;
+                } else
+                    r--;
+            }
+        }
+        return res;
+    }
+};
