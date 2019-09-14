@@ -1,0 +1,51 @@
+Runtime: 8 ms, faster than 26.84% of C++ online submissions for Add Binary.
+Memory Usage: 9.3 MB, less than 50.91% of C++ online submissions for Add Binary.
+class Solution {
+public:
+    string addBinary(string a, string b) {
+        int ia = a.size() - 1, ib = b.size() - 1, carry = 0;
+        string res = "";
+        while (ia >=0 || ib >= 0) {
+            int sum = (ia >= 0 ? a[ia--] - '0' : 0) + (ib >=0 ? b[ib--] - '0' : 0) + carry;
+            switch (sum) {
+                case 3:
+                    carry = 1;
+                    res = "1" + res;
+                    break;
+                case 2:
+                    carry = 1;
+                    res = "0" + res;
+                    break;
+                case 1:
+                    carry = 0;
+                    res = "1" + res;
+                    break;
+                case 0:
+                    carry = 0;
+                    res = "0" + res;
+                    break;
+            }
+        }
+        if (carry)
+            res = "1" + res;
+        return res;
+    }
+};
+
+Runtime: 8 ms, faster than 26.84% of C++ online submissions for Add Binary.
+Memory Usage: 9.4 MB, less than 27.27% of C++ online submissions for Add Binary.
+class Solution {
+public:
+    string addBinary(string a, string b) {
+        int ia = a.size() - 1, ib = b.size() - 1, carry = 0;
+        string res = "";
+        while (ia >=0 || ib >= 0) {
+            int sum = (ia >= 0 ? a[ia--] - '0' : 0) + (ib >=0 ? b[ib--] - '0' : 0) + carry;
+            res = to_string(sum % 2) + res;
+            carry = sum / 2;
+        }
+        if (carry)
+            res = "1" + res;
+        return res;
+    }
+};
