@@ -1,0 +1,77 @@
+//solution 1: first own solution, beat 47.38
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        unordered_map<char, int> dict;
+        int res = 0, left = 0;
+        if (s.empty())
+            return res;
+        for (int i = 0; i < s.size(); i++) {
+            if (!dict.count(s[i])) {
+                dict[s[i]] = i;
+                res = max(res, i - left + 1);
+            } else {
+                if (dict[s[i]] < left)
+                    res = max(res, i - left + 1);
+                else
+                    left = dict[s[i]] + 1;
+                dict[s[i]] = i;
+            }
+        }
+        return res;
+    }
+};
+
+//solution 2: optimized for solution 1, beat 47.38
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        unordered_map<int, int> dict;
+        int res = 0, left = -1;
+        for (int i = 0; i < s.size(); i++) {
+            if (dict.count(s[i]) && dict[s[i]] > left)
+                left = dict[s[i]];
+            dict[s[i]] = i;
+            res = max(res, i - left);
+        }
+        return res;
+    }
+};
+
+//Solution 3: use a 128 vector
+//Runtime: 12 ms, faster than 82.07% of C++ online submissions for Longest Substring Without Repeating Characters.
+//Memory Usage: 10 MB, less than 73.63% of C++ online submissions for Longest Substring Without Repeating Characters.
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        vector<int> m(128, -1);
+        int res = 0, left = -1;
+        for (int i = 0; i < s.size(); i++) {
+            left = max(left, m[s[i]]);
+            m[s[i]] = i;
+            res = max(res, i - left);
+        }
+        return res;
+    }
+};
+
+//solution4 use a hashset
+//Runtime: 36 ms, faster than 27.50% of C++ online submissions for Longest Substring Without Repeating Characters.
+//Memory Usage: 13.3 MB, less than 33.83% of C++ online submissions for Longest Substring Without Repeating Characters.
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        unordered_set<int> m;
+        int res = 0, left = 0, i = 0;
+        while (i < s.size()) {
+            if (!m.count(s[i])) {
+                m.insert(s[i++]);
+                //m[s[i]] = i++;
+                res = max(res, (int)m.size());
+            } else {
+                m.erase(s[left++]);
+            }
+        }
+        return res;
+    }
+};
