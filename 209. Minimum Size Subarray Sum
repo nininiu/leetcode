@@ -1,0 +1,83 @@
+Runtime: 8 ms, faster than 96.61% of C++ online submissions for Minimum Size Subarray Sum.
+Memory Usage: 9.8 MB, less than 100.00% of C++ online submissions for Minimum Size Subarray Sum.
+class Solution {
+public:
+    int minSubArrayLen(int s, vector<int>& nums) {
+        int left = 0, res = INT_MAX, sum = 0;
+        for (int i = 0; i < nums.size(); i++) {
+            sum += nums[i];
+            while (sum >= s) {
+                res = min(res, i - left + 1);
+                sum -= nums[left++];
+            }
+        }
+        return res == INT_MAX ? 0 : res;
+    }
+};
+
+//solution2 followup binary search right
+//Runtime: 12 ms, faster than 66.91% of C++ online submissions for Minimum Size Subarray Sum.
+//Memory Usage: 10.1 MB, less than 29.41% of C++ online submissions for Minimum Size Subarray Sum.
+class Solution {
+public:
+    int minSubArrayLen(int s, vector<int>& nums) {
+        int n = nums.size(), left = 0, right = n, res = n + 1;
+        vector<int> sum(n + 1, 0);
+        for (int i = 1; i <= n; i++)
+           sum[i] = sum[i - 1] + nums[i - 1];
+        
+        for (int i = 0; i < n + 1; i++) {
+            //cout<<res<<endl;
+            int right = searchRight(i + 1, n, sum[i] + s, sum);
+            if (right == n + 1)
+                break;
+            res = min(res, right - i);
+            //cout<<res<<right<<i<<endl;
+        }
+        return res == n + 1 ? 0 : res;
+    }
+    
+private:
+    int searchRight(int left, int right, int target, vector<int>& sum) {
+        //cout<<left<<" "<<right<<endl;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (sum[mid] == target)
+                return mid;
+            if (sum[mid] >= target)
+                right = mid - 1;
+            else
+                left = mid + 1;
+        }
+        return left;
+    }
+};
+
+//solution 3: no subfunction, same cost 
+//Runtime: 12 ms, faster than 66.91% of C++ online submissions for Minimum Size Subarray Sum.
+//Memory Usage: 10.1 MB, less than 29.41% of C++ online submissions for Minimum Size Subarray Sum.
+class Solution {
+public:
+    int minSubArrayLen(int s, vector<int>& nums) {
+        int n = nums.size(), res = n + 1;
+        vector<int> sum(n + 1, 0);
+        for (int i = 1; i <= n; i++)
+           sum[i] = sum[i - 1] + nums[i - 1];
+        
+        for (int i = 0; i < n; i++) {
+            int left = i + 1, right = n, t = sum[i] + s;
+            while (left <= right) {
+                int mid = left + (right - left) / 2;
+                if (sum[mid] < t)
+                    left = mid + 1;
+                else
+                    right = mid - 1;
+            }
+            if (left == n + 1)
+                break;
+            res = min(res, left - i);
+        }
+        return res == n + 1 ? 0 : res;
+    }
+  
+};
