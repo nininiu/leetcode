@@ -1,0 +1,53 @@
+//solution1
+//Runtime: 4 ms, faster than 92.08% of C++ online submissions for Partition Labels.
+//Memory Usage: 9 MB, less than 32.26% of C++ online submissions for Partition Labels.
+class Solution {
+public:
+    vector<int> partitionLabels(string S) {
+        vector<int> res;
+        unordered_map<int, int> m;
+        int n = S.size();
+        for (int i = 0; i < n; i++) {
+            m[S[i]] = i;
+            //cout<<m[S[i]]<<endl;
+        }
+        
+        int start = 0, end = 0;
+        for (int i = 0; i < n; i++) {
+            end = max(end, m[S[i]]);
+            //cout<<end<<endl;
+            if (i == end) {
+                res.push_back(i - start + 1);
+                start = end + 1;
+            }
+        }
+        return res;
+    }
+};
+
+//solution 2 bettor space complecity
+//Runtime: 4 ms, faster than 92.08% of C++ online submissions for Partition Labels.
+//Memory Usage: 8.8 MB, less than 70.97% of C++ online submissions for Partition Labels.
+class Solution {
+public:
+    vector<int> partitionLabels(string S) {
+        vector<int> res;
+        vector<int> m(128, 0);
+        int n = S.size();
+        for (int i = 0; i < n; i++) {
+            m[S[i]] = i;
+            //cout<<m[S[i]]<<endl;
+        }
+        
+        int start = 0, end = 0;
+        for (int i = 0; i < n; i++) {
+            end = max(end, m[S[i]]);
+            //cout<<end<<endl;
+            if (i == end) {
+                res.push_back(i - start + 1);
+                start = end + 1;
+            }
+        }
+        return res;
+    }
+};
