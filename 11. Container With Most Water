@@ -1,0 +1,18 @@
+Runtime: 20 ms, faster than 65.70% of C++ online submissions for Container With Most Water.
+Memory Usage: 9.8 MB, less than 91.75% of C++ online submissions for Container With Most Water.
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        int l = 0, r = height.size() - 1;
+        //int l = left, r = right;
+        int res = 0;
+        while (l < r) {
+            res = max(res, min(height[l], height[r]) * (r - l));
+            if (height[l] < height[r]) 
+                l++;
+            else
+                r--;
+        }
+        return res;
+    }
+};
