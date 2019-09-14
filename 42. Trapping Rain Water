@@ -1,0 +1,42 @@
+//solution 1: two pointer
+//Runtime: 8 ms, faster than 58.43% of C++ online submissions for Trapping Rain Water.
+//Memory Usage: 9.1 MB, less than 78.48% of C++ online submissions for Trapping Rain Water.
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        int l = 0, r = height.size() - 1, res = 0;
+        while (l < r) {
+            int mn = min(height[l], height[r]);
+            if (height[l] == mn) {
+                l++;
+                while (l < r && height[l] < mn) {
+                    res += mn - height[l++];
+                }
+            } else {
+                r--;
+                while (l < r && height[r] < mn) {
+                    res += mn - height[r--];
+                }
+            }
+            //cout<<l<<" "<<r<<endl;
+        }
+        return res;
+    }
+};
+
+//solution: code optimization, but not better
+Runtime: 8 ms, faster than 58.43% of C++ online submissions for Trapping Rain Water.
+Memory Usage: 9 MB, less than 97.47% of C++ online submissions for Trapping Rain Water.
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        int l = 0, r = height.size() - 1, res = 0, level = 0;
+        while (l < r) {
+            int lower = height[height[l] < height[r] ? l++ : r--];
+            level = max(level, lower);
+            res += level - lower;
+        }
+        return res;
+    }
+};
+
