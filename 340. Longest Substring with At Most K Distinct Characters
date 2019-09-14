@@ -1,0 +1,19 @@
+Runtime: 16 ms, faster than 69.80% of C++ online submissions for Longest Substring with At Most K Distinct Characters.
+Memory Usage: 10.4 MB, less than 63.64% of C++ online submissions for Longest Substring with At Most K Distinct Characters.
+class Solution {
+public:
+    int lengthOfLongestSubstringKDistinct(string s, int k) {
+        unordered_map<int, int> m;
+        int res = 0, left = 0;
+        for (int i = 0; i < s.size(); i++) {
+            m[s[i]]++;
+            while (m.size() > k) {
+                if (--m[s[left]] == 0)
+                    m.erase(s[left]);
+                left++;
+            }
+            res = max(res, i - left + 1);
+        }
+        return res;
+    }
+};
