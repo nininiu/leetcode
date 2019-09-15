@@ -1,0 +1,27 @@
+Runtime: 4 ms, faster than 85.73% of C++ online submissions for Remove Nth Node From End of List.
+Memory Usage: 8.6 MB, less than 71.05% of C++ online submissions for Remove Nth Node From End of List.
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        ListNode* tail = head;
+        while (n--) {
+            tail = tail->next;
+        }
+        ListNode * dummy = new ListNode(-1), *cur = dummy;
+        dummy->next = head;
+        while (tail) {
+            tail = tail->next;
+            dummy = dummy->next;
+        }
+        dummy->next = dummy->next->next;
+        return cur->next;
+    }
+};
