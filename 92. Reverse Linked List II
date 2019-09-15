@@ -1,0 +1,64 @@
+Runtime: 4 ms, faster than 67.20% of C++ online submissions for Reverse Linked List II.
+Memory Usage: 8.6 MB, less than 93.75% of C++ online submissions for Reverse Linked List II.
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseBetween(ListNode* head, int m, int n) {
+        ListNode *dummy = new ListNode(-1), *start = dummy;
+        dummy->next = head;
+        int diff = n - m;
+        while (--m) {
+            start = start->next;
+        }
+        
+        ListNode* cur = start->next;
+        ListNode* pre = NULL;
+        ListNode* tail = cur;
+        //cout<<cur->val<<endl;
+        while (diff-- >=0) {
+            //cout<<diff<<" "<<cur->val<<endl;
+            ListNode* tmp = cur->next;
+            cur->next = pre;
+            pre = cur;
+            cur = tmp;
+        }
+        start->next = pre;
+        tail->next = cur;
+        return dummy->next;
+    }
+};
+
+Runtime: 8 ms, faster than 67.20% of C++ online submissions for Reverse Linked List II.
+Memory Usage: 8.6 MB, less than 100.00% of C++ online submissions for Reverse Linked List II.
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseBetween(ListNode* head, int m, int n) {
+        ListNode *dummy = new ListNode(-1), *pre = dummy;
+        dummy->next = head;
+        for (int i = 0; i < m - 1; i++)
+            pre = pre->next;
+        ListNode* cur = pre->next;
+        for (int i = m; i < n; i++) {
+            ListNode* tmp = cur->next;
+            cur->next = tmp->next;
+            tmp->next = pre->next;
+            pre->next = tmp;
+        }
+        return dummy->next;
+    }
+};
