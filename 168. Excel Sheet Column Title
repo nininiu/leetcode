@@ -1,0 +1,17 @@
+Runtime: 0 ms, faster than 100.00% of C++ online submissions for Excel Sheet Column Title.
+Memory Usage: 7.9 MB, less than 100.00% of C++ online submissions for Excel Sheet Column Title.
+class Solution {
+public:
+    string convertToTitle(int n) {
+        string res = "";
+        while (n) {
+            
+            int tmp = (n - 1) % 26;
+            
+            res = string(1, 'A' + tmp) + res;
+            n = (n - (n - 1) % 26 + 1) / 26;
+            //n -= tmp + 1;
+        }
+        return res;
+    }
+};
