@@ -1,0 +1,31 @@
+Runtime: 136 ms, faster than 30.11% of C++ online submissions for Perfect Squares.
+Memory Usage: 11.4 MB, less than 57.69% of C++ online submissions for Perfect Squares.
+class Solution {
+public:
+    int numSquares(int n) {
+        vector<int> dp(n + 1, INT_MAX);
+        dp[0] = 0;
+        
+        for (int i = 0; i <= n; i++) {
+            for (int j = 0; i + j * j <= n; j++)
+                dp[i + j * j] = min(dp[i + j * j], dp[i] + 1);
+        }
+        return dp[n];
+    }
+};
+
+Runtime: 428 ms, faster than 6.38% of C++ online submissions for Perfect Squares.
+Memory Usage: 8.2 MB, less than 100.00% of C++ online submissions for Perfect Squares.
+
+class Solution {
+public:
+    int numSquares(int n) {
+        int num = 2, res = n;
+        while (num * num <= n) {
+            int a = n / (num * num), b = n % (num * num);
+            res = min(res, a + numSquares(b));
+            num++;
+        }
+        return res;
+    }
+};
