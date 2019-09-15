@@ -1,0 +1,29 @@
+Runtime: 4 ms, faster than 98.96% of C++ online submissions for Remove Duplicates from Sorted List II.
+Memory Usage: 9.1 MB, less than 73.17% of C++ online submissions for Remove Duplicates from Sorted List II.
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+        ListNode *dummy = new ListNode(-1), *cur = dummy;
+        dummy->next = head;
+        //cur = head;
+        while (cur->next && cur->next->next) {
+            if (cur->next->val == cur->next->next->val) {
+                ListNode* tmp = cur->next;
+                while (tmp && tmp->next && tmp->val == tmp->next->val)
+                    tmp = tmp->next;
+                cur->next = tmp->next;
+            } else {
+                cur = cur->next;
+            }
+        }
+        return dummy->next;
+    }
+};
