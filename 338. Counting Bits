@@ -16,3 +16,19 @@ public:
         return res;
     }
 };
+
+Runtime: 56 ms, faster than 49.80% of C++ online submissions for Counting Bits.
+Memory Usage: 9.4 MB, less than 100.00% of C++ online submissions for Counting Bits.
+class Solution {
+public:
+    vector<int> countBits(int num) {
+        vector<int> res(num + 1, 0);
+        for (int i = 1; i <= num; i++) {
+            if (i % 2 == 0)
+                res[i] = res[i / 2];
+            else
+                res[i] = res[i / 2] + 1;
+        }
+        return res;
+    }
+};
