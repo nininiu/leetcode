@@ -1,0 +1,23 @@
+Runtime: 12 ms, faster than 61.33% of C++ online submissions for Rectangle Area.
+Memory Usage: 8.2 MB, less than 78.26% of C++ online submissions for Rectangle Area.
+class Solution {
+public:
+    int computeArea(int A, int B, int C, int D, int E, int F, int G, int H) {
+        int dx1 = C - A;
+        int dy1 = D - B;
+        int dx2 = G - E;
+        int dy2 = H - F;
+        int area1 = dx1 * dy1;
+        int area2 = dx2 * dy2;
+        int xm1 = max(A, E);
+        int xm2 = min(C, G);
+        int ym1 = max(B, F);
+        int ym2 = min(D, H);
+        int area3 = 0;
+        if (xm1 < xm2 && ym1 < ym2)
+            area3 = (xm2 - xm1) * (ym2 - ym1);
+        cout<<area1<<" "<<area2<<" "<<area3<<endl;
+        
+        return area1 + (area2 -area3);
+    }
+};
