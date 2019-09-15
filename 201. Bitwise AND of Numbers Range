@@ -1,0 +1,14 @@
+Runtime: 12 ms, faster than 75.90% of C++ online submissions for Bitwise AND of Numbers Range.
+Memory Usage: 8.2 MB, less than 72.73% of C++ online submissions for Bitwise AND of Numbers Range.
+class Solution {
+public:
+    int rangeBitwiseAnd(int m, int n) {
+        int cnt = 0;
+        while (m != n) {
+            m >>= 1;
+            n >>= 1;
+            cnt++;
+        }
+        return m<<cnt;
+    }
+};
