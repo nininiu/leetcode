@@ -1,0 +1,68 @@
+Runtime: 12 ms, faster than 5.15% of C++ online submissions for Partition List.
+Memory Usage: 8.7 MB, less than 70.83% of C++ online submissions for Partition List.
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* partition(ListNode* head, int x) {
+        ListNode* small = new ListNode(-1), *shead = small;
+        ListNode* large = new ListNode(-1), *lhead = large;
+        while (head) {
+            if (head->val < x) {
+                small->next = head;
+                small = small->next;
+                //cout<<"small"<<small->val<<endl;
+            } else {
+                large->next = head;
+                large = large->next;
+                //cout<<"large"<<large->val<<endl;
+            }
+            cout<<head->val<<endl;
+            head = head->next;
+        }
+        small->next = lhead->next;
+        large->next = NULL;
+        //cout<<shead->next->val<<endl;
+        return shead->next;
+    }
+};
+
+//solution 2
+Runtime: 8 ms, faster than 55.78% of C++ online submissions for Partition List.
+Memory Usage: 8.7 MB, less than 54.17% of C++ online submissions for Partition List.
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* partition(ListNode* head, int x) {
+        ListNode *dummy = new ListNode(-1), *pre = dummy;
+        pre->next = head;
+        while (pre->next && pre->next->val < x)
+            pre = pre->next;
+        ListNode* cur = pre;
+        while (cur->next) {
+            if (cur->next->val < x) {
+                ListNode* tmp = cur->next;
+                cur->next = tmp->next;
+                tmp->next = pre->next;
+                pre->next = tmp;
+                pre = pre->next;
+                
+            } else
+                cur = cur->next;
+        }
+        return dummy->next;
+    }
+};
