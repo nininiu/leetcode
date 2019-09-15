@@ -1,0 +1,22 @@
+Runtime: 28 ms, faster than 28.06% of C++ online submissions for Missing Number.
+Memory Usage: 9.8 MB, less than 98.04% of C++ online submissions for Missing Number.
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        int n = nums.size();
+        return n * (n + 1) / 2 - (accumulate(nums.begin(), nums.end(), 0));
+    }
+};
+
+Runtime: 24 ms, faster than 80.02% of C++ online submissions for Missing Number.
+Memory Usage: 9.8 MB, less than 92.16% of C++ online submissions for Missing Number.
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        int res = 0;
+        for (int i = 0; i < nums.size(); i++) {
+            res = res ^ (i + 1) ^ nums[i];
+        }
+        return res;
+    }
+};
