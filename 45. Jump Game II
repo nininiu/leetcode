@@ -1,0 +1,15 @@
+Runtime: 8 ms, faster than 96.68% of C++ online submissions for Jump Game II.
+Memory Usage: 10 MB, less than 100.00% of C++ online submissions for Jump Game II.
+class Solution {
+public:
+    int jump(vector<int>& nums) {
+        int res = 0, i = 0, n = nums.size(), cur = 0;
+        while (cur < n - 1) {
+            res++;
+            int pre = cur;
+            for (; i <= pre; i++)
+                cur = max(cur, i + nums[i]);
+        }
+        return res;
+    }
+};
