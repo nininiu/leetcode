@@ -1,0 +1,50 @@
+Runtime: 20 ms, faster than 20.99% of C++ online submissions for Jump Game.
+Memory Usage: 10 MB, less than 72.37% of C++ online submissions for Jump Game.
+
+class Solution {
+public:
+    bool canJump(vector<int>& nums) {
+        if (nums.size() < 2)
+            return true;
+        int fast = 0;
+        for (int i = 0; i < nums.size(); i++) {
+            fast = max(fast, i + nums[i]);
+            if (fast == i)
+                return false;
+            if (fast >= nums.size() - 1)
+                return true;
+        }
+        return false;
+    }
+};
+
+Runtime: 12 ms, faster than 71.35% of C++ online submissions for Jump Game.
+Memory Usage: 9.7 MB, less than 100.00% of C++ online submissions for Jump Game.
+class Solution {
+public:
+    bool canJump(vector<int>& nums) {
+        int n = nums.size(), reach = 0;
+        for (int i = 0; i < n; i++) {
+            if (i > reach || reach >= n - 1)
+                break;
+            reach = max(reach, i + nums[i]);
+        }
+        return reach >= n - 1;
+    }
+};
+
+Runtime: 8 ms, faster than 97.00% of C++ online submissions for Jump Game.
+Memory Usage: 10.1 MB, less than 55.26% of C++ online submissions for Jump Game.
+class Solution {
+public:
+    bool canJump(vector<int>& nums) {
+        vector<int> dp(nums.size(), 0);
+        for (int i = 1; i < nums.size(); i++) {
+            dp[i] = max(dp[i - 1], nums[i - 1]) - 1;
+            if (dp[i] < 0)
+                return false;
+        }
+        return true;
+    }
+};
+
