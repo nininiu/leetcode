@@ -1,0 +1,39 @@
+Runtime: 20 ms, faster than 70.51% of C++ online submissions for Reverse Nodes in k-Group.
+Memory Usage: 9.9 MB, less than 48.39% of C++ online submissions for Reverse Nodes in k-Group.
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        ListNode *dummy = new ListNode(-1), *pre = dummy;
+        dummy->next = head;
+        ListNode* cur = head;
+        while (cur) {
+            bool flag = true;
+            ListNode* f = cur;
+            int cnt = k;
+            while (f) {
+                if (--cnt == 0)
+                    break;
+                f = f->next;
+            }
+            if (cnt > 0)
+                break;
+            for (int i = 0; i < k - 1 && cur->next; i++) {
+                ListNode* t = cur->next;
+                cur->next = t->next;
+                t->next = pre->next;
+                pre->next = t;
+            }
+            pre = cur;
+            cur = cur->next;
+        }
+        return dummy->next;
+    }
+};
