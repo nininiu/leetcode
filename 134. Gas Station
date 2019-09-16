@@ -1,0 +1,20 @@
+Runtime: 4 ms, faster than 99.11% of C++ online submissions for Gas Station.
+Memory Usage: 9 MB, less than 88.24% of C++ online submissions for Gas Station.
+
+class Solution {
+public:
+    int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+        int total = 0, sum = 0, start = 0;
+        for (int i = 0; i < gas.size(); i++) {
+            int t = gas[i] - cost[i];
+            total += t;
+            sum += t;
+            if (sum < 0) {
+                sum = 0;
+                start = i + 1;
+            }
+                
+        }
+        return total < 0 ? -1 : start;
+    }
+};
