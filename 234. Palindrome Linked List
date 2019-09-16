@@ -1,0 +1,81 @@
+//solution1: on my own
+Runtime: 24 ms, faster than 67.09% of C++ online submissions for Palindrome Linked List.
+Memory Usage: 12.4 MB, less than 96.55% of C++ online submissions for Palindrome Linked List./**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+        
+        ListNode* node = head;
+		int cnt = 0;
+        while (node) {
+			node = node->next;      
+			cnt++;
+		}
+        if (cnt < 2)
+            return true;
+        ListNode* slow = head;
+        ListNode* fast = head;
+        while (fast && fast->next) {
+            slow = slow->next;
+			fast = fast->next->next;
+            cout<<"slow"<<slow->val<<endl;
+        }
+        
+		ListNode* pre = NULL;
+		ListNode* cur = head;
+        cout<<slow->val<<endl;
+		while (cur && cur != slow) {
+			ListNode* t = cur->next;
+			cur->next = pre;
+			pre = cur;
+			cur = t;
+		}
+		cur = (cnt % 2 ? slow->next : slow);
+		while (pre && cur) {
+			if (pre->val != cur->val)
+				return false;
+			pre = pre->next;
+			cur = cur->next;
+		}
+		return true;
+    }
+};
+
+//solution2 stack
+Runtime: 16 ms, faster than 98.08% of C++ online submissions for Palindrome Linked List.
+Memory Usage: 13.2 MB, less than 34.48% of C++ online submissions for Palindrome Linked List.
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+        ListNode* cur = head;
+        stack<int> st;
+        while (cur) {
+            st.push(cur->val);
+            cur = cur->next;
+        }
+        
+        cur = head;
+        while (cur) {
+            if (cur->val != st.top())
+                return false;
+            cur = cur->next;
+            st.pop();
+        }
+        return true;
+    }
+};
