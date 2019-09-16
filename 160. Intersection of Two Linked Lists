@@ -1,0 +1,69 @@
+Runtime: 44 ms, faster than 94.39% of C++ online submissions for Intersection of Two Linked Lists.
+Memory Usage: 16.8 MB, less than 68.52% of C++ online submissions for Intersection of Two Linked Lists.
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        ListNode *ha = headA, *hb = headB;
+        int la = 0, lb = 0;
+        while (ha) {
+            la++;
+            ha = ha->next;
+        }
+        while (hb) {
+            lb++;
+            hb = hb->next;
+        }
+        int diff = abs(la - lb);
+        if (la < lb) {
+            ha = headB;
+            hb = headA;
+        } else {
+            ha = headA;
+            hb = headB;
+        }
+        
+        
+        while (diff--) {
+            ha = ha->next;
+        }
+        
+        while (ha && hb && ha != hb) {
+            ha = ha->next;
+            hb = hb->next;
+        }
+        return ha;
+    }
+};
+
+Runtime: 48 ms, faster than 81.92% of C++ online submissions for Intersection of Two Linked Lists.
+Memory Usage: 16.8 MB, less than 68.52% of C++ online submissions for Intersection of Two Linked Lists.
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        if (!headA || !headB)
+            return nullptr;
+        ListNode *ha = headA, *hb = headB;
+        while (ha != hb) {
+            ha = ha ? ha->next : headB;
+            hb = hb ? hb->next : headA;
+        }
+        return ha;
+    }
+};
