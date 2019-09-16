@@ -1,0 +1,40 @@
+Runtime: 20 ms, faster than 99.39% of C++ online submissions for Convert Sorted List to Binary Search Tree.
+Memory Usage: 24.4 MB, less than 90.91% of C++ online submissions for Convert Sorted List to Binary Search Tree.
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* sortedListToBST(ListNode* head) {
+        if (!head)
+            return nullptr;
+        if (!head->next)
+            return new TreeNode(head->val);
+        ListNode *slow = head, *fast = head, *last = slow;
+        while (fast && fast->next) {
+            last = slow;
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        TreeNode* root = new TreeNode(slow->val);
+        last->next = NULL;
+        if (slow != head)
+            root->left = sortedListToBST(head);
+        root->right = sortedListToBST(slow->next);
+        return root;
+    }
+};
